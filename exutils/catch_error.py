@@ -26,7 +26,7 @@ def catch_exception(
     - show：是否显示报错详细堆栈
 
     返回：
-    - 一个装饰后的函数，类型与原函数一致（参数和返回值）
+    - 一个装饰后的函数，类型与原函数一致
     """
 
     def decorator(func: Callable[P, T]) -> Callable[P, T]:

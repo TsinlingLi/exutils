@@ -21,4 +21,4 @@ version_scheme = "post-release"
 local_scheme = "no-local-version"
 
 [project.urls]
-Homepage = "https://github.com/tsinling/exutils"
+Homepage = "https://github.com/TsinlingLi/exutils"

@@ -18,7 +18,7 @@ dependencies = [
 
 [tool.setuptools_scm]
 version_scheme = "post-release"
-local_scheme = "node-and-date"
+local_scheme = "no-local-version"
 
 [project.urls]
 Homepage = "https://github.com/tsinling/exutils"

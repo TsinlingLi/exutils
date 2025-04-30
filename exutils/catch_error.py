@@ -1,7 +1,7 @@
 import functools
 import inspect
 import traceback
-from typing import Callable, TypeVar, ParamSpec, cast, Sequence, Iterable
+from typing import Callable, TypeVar, ParamSpec, cast, Sequence, Iterable, Optional, Union, overload, Any
 
 try:
     import pandas as pd
@@ -12,13 +12,29 @@ T = TypeVar('T')
 P = ParamSpec('P')
 
 
+@overload
+def catch_exception(func: Callable[P, T]) -> Callable[P, T]: ...
+
+
+@overload
 def catch_exception(
-        return_value: T = None,
+        *, return_value: Any = ..., suppress: bool = ..., show: bool = ...
+) -> Callable[[Callable[P, T]], Callable[P, T]]: ...
+
+
+def catch_exception(
+        _func: Optional[Callable[P, T]] = None,
+        *,
+        return_value: Any = None,
         suppress: bool = True,
         show: bool = True
-) -> Callable[[Callable[P, T]], Callable[P, T]]:
+) -> Union[Callable[[Callable[P, T]], Callable[P, T]], Callable[..., T]]:
     """
     装饰器：捕获异常并打印堆栈，可控制是否抑制异常。
+
+    用法支持：
+    @catch_exception
+    @catch_exception(return_value=None, suppress=True, show=True)
 
     参数：
     - return_value：函数出错时返回的默认值（例如 None、False 等）
@@ -66,10 +82,13 @@ def catch_exception(
                 if show:
                     traceback.print_exc()
                 if suppress:
-                    return return_value
+                    return cast(T, return_value)
                 else:
                     raise
 
         return cast(Callable[P, T], wrapper)
 
-    return decorator
+    if _func is None:
+        return decorator
+    else:
+        return decorator(_func)

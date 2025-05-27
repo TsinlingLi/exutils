@@ -4,9 +4,9 @@ import traceback
 from typing import Callable, TypeVar, ParamSpec, cast, Sequence, Iterable, Optional, Union, overload, Any
 
 try:
-    import pandas as pd
+    import pandas as _pd
 except ModuleNotFoundError:
-    pd = None
+    _pd = None
 
 T = TypeVar('T')
 P = ParamSpec('P')
@@ -57,7 +57,7 @@ def catch_exception(
                     bound = sig.bind(*args, **kwargs)
                     bound.apply_defaults()
                     for name, val in bound.arguments.items():
-                        if pd is not None and isinstance(val, (pd.DataFrame, pd.Series)):
+                        if _pd is not None and isinstance(val, (_pd.DataFrame, _pd.Series)):
                             print(f"[参数] {name} \n{val.head()!r}")
                         elif isinstance(val, str):
                             print(f"[参数] {name}={val[:100]!r}..." if len(val) > 100 else f"[参数] {name}={val!r}")

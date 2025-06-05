@@ -45,7 +45,7 @@ class LoguruLogger:
     @property
     def template(self) -> Template:
         return Template(
-            "$time $c $level $c $name:$func:$line $c PID: $pid $c - $message$extra \n$exception\n"
+            "$time $c $level $c $name:$func:$line $c PID: $pid $c - $message$extra \n$exception"
         )
 
     def message_format(self, record):

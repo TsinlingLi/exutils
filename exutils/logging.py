@@ -1,5 +1,7 @@
 import os
+import socket
 import sys
+import uuid
 from pathlib import Path
 from string import Template
 from typing import Union
@@ -40,6 +42,10 @@ class LoguruLogger:
         log_dir = log_dir if log_dir else os.path.expanduser("~")
         log_dir = Path(log_dir) if isinstance(log_dir, str) else log_dir
         log_path = log_dir.joinpath(log_file)
+        _hostname = socket.gethostname()
+        _id = hex(uuid.getnode())[-6:]
+        _pid = os.getpid()
+        log_path.with_stem(f"{log_path.stem}_{_hostname}_{_id}_{_pid}")
         return log_path
 
     @property

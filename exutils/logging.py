@@ -45,7 +45,7 @@ class LoguruLogger:
         _hostname = socket.gethostname()
         _id = hex(uuid.getnode())[-6:]
         _pid = os.getpid()
-        log_path.with_stem(f"{log_path.stem}_{_hostname}_{_id}_{_pid}")
+        log_path = log_path.with_stem(f"{log_path.stem}_{_hostname}_{_id}_{_pid}")
         return log_path
 
     @property
